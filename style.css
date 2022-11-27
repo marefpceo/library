@@ -94,7 +94,7 @@ section::-webkit-scrollbar {
     justify-content: space-between;
     border-bottom: 1pt solid #91c788;
 }
-.card-header img {
+.card-header input[type='image'] {
     width: 35px;
 }
 
@@ -109,7 +109,11 @@ footer {
     padding: 0 20px;
 }
 
-footer img {
+footer input[type='image'] {
     height: 4rem;
     width: 4rem;
+}
+
+input[type='image']:hover {
+    transform: scale(1.2);
 }
