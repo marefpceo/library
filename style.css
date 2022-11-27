@@ -1,0 +1,115 @@
+@font-face {
+    font-family: 'Libre Baskerville';
+    src: url(source/LibreBaskerville-Regular.ttf);
+}
+
+@font-face {
+    font-family: 'Libre Baskerville';
+    src: url(source/LibreBaskerville-Bold.ttf);
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'Libre Baskerville';
+    src: url(source/LibreBaskerville-Italic.ttf);
+    font-style: italic;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    color: #feffde;
+    font-family: 'Libre Baskerville';
+    background-color: #ddffbc;
+    margin: 0;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-left: 1vw;
+}
+
+h2 {
+    font-size: 1.2rem;
+}
+
+h3 {
+    font-size: 1rem;
+}
+
+.container {
+    display: grid;
+    grid-template-rows: 15vh 74vh 11vh;
+}
+
+
+/******************** Header Section ********************/
+header {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    background-color: #52734d;
+    padding: 20px;
+    margin-bottom: 5px;
+    box-shadow: 0 2px 2px 0px #91c788;
+}
+
+header img {
+    width: 6rem;
+}
+
+
+
+/******************** Main Section ********************/
+section {
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y:  scroll;
+    justify-content: space-around;
+    background-color: #ddffbc;
+    padding: 40px;
+    scrollbar-width: none;
+}
+
+section::-webkit-scrollbar {
+    display: none;
+}
+
+.card {
+    background-color: #feffde;
+    color: #52734d;
+    border: 2px solid #91c788;
+    border-radius: 8px;
+    height: 250px;
+    width: 350px;
+    margin: 15px 0;
+    padding: 0 10px;
+}
+
+.card-header{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1pt solid #91c788;
+}
+.card-header img {
+    width: 35px;
+}
+
+
+/******************** Footer Section ********************/
+footer {
+    background-color: #91c788;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    box-shadow: 0 -4px 4px -2px #52734d;
+    padding: 0 20px;
+}
+
+footer img {
+    height: 4rem;
+    width: 4rem;
+}
