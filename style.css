@@ -134,8 +134,8 @@ footer input[type='image'] {
 
 
 /******************** Modal Section ********************/
-.add-book-modal {
-    display: grid;
+.book-modal {
+    display: none;
     grid-template-rows: 1fr 3fr 1fr;
     position: fixed;
     z-index: 1;

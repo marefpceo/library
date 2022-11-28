@@ -1,4 +1,12 @@
+const bookModal = document.querySelector('.book-modal');
+const addBtn = document.getElementById('add-button');
+const closeModal = document.getElementById('close-modal');
+const submitBtn = document.getElementById('submit');
+const cancelBtn = document.getElementById('cancel');
+
+
 let myLibrary = [];
+
 
 // Book Object constructor
 function Book(title, author, numOfPages, haveRead) {
@@ -27,6 +35,20 @@ function displayList() {
         }
     });
 }
+
+
+
+addBtn.addEventListener('click', ()=> {
+    bookModal.style.display = 'grid';
+});
+
+closeModal.addEventListener('click', ()=> {
+    bookModal.style.display = 'none';
+});
+
+cancelBtn.addEventListener('click', ()=> {
+    bookModal.style.display = 'none';
+});
 
 
 console.log(addBook('The Book', 'Lamar', 500, true));

@@ -28,10 +28,10 @@
                 </div>
             </div>
 
-            <div class='add-book-modal'>
+            <div class='book-modal'>
                 <div class='book-modal-header'>
                     <p>To add a new book to <strong><em>My Library</em></strong>, add the book's information below.</p>
-                    <input type='image' src='images/close-circle.svg' alt='Close icon'>
+                    <input type='image' src='images/close-circle.svg' id='close-modal' alt='Close icon'>
                 </div>
                 <div class='book-modal-body'>
                     <label for='title'>Title:</label>
@@ -50,15 +50,15 @@
                     </fieldset>
                 </div>
                 <div class='book-modal-footer'>
-                    <button>Submit</button>
-                    <button>Cancel</button>
+                    <button id='submit'>Submit</button>
+                    <button id='cancel'>Cancel</button>
                 </div>
             </div>
             
         </section>
 
         <footer>
-            <input type='image' src='images/plus-circle.svg' alt='Add book icon'>
+            <input type='image' src='images/plus-circle.svg' id='add-button' alt='Add book icon'>
         </footer>
     </div>
 </body>
