@@ -49,6 +49,17 @@ p {
     grid-template-rows: 15vh 74vh 11vh;
 }
 
+input[type='image']:active,
+.book-modal-footer button:active {
+    transform: scale(0.95);
+}
+
+input[type='image']:hover,
+.book-modal-footer button:hover {
+    transform: scale(1.1);
+}
+
+
 
 /******************** Header Section ********************/
 header {
@@ -78,6 +89,7 @@ section {
     scrollbar-width: none;
 }
 
+/* Removes scrollbar when content overflows */
 section::-webkit-scrollbar {
     display: none;
 }
@@ -98,6 +110,7 @@ section::-webkit-scrollbar {
     justify-content: space-between;
     border-bottom: 1pt solid #91c788;
 }
+
 .card-header input[type='image'] {
     width: 2rem;
 }
@@ -118,9 +131,6 @@ footer input[type='image'] {
     width: 4rem;
 }
 
-input[type='image']:hover {
-    transform: scale(1.1);
-}
 
 
 /******************** Modal Section ********************/
@@ -137,7 +147,7 @@ input[type='image']:hover {
     color: #52734d;
     width: 30%;
     height: 60%;
-    padding: 10px;
+    padding: 30px;
 }
 
 .book-modal-header {
@@ -153,10 +163,68 @@ input[type='image']:hover {
 .book-modal-body {
     display: grid;
     grid-template-columns: 1fr 3fr;
+    column-gap: 5px;
     align-items: center;
 }
+
+
 fieldset {
     grid-column: 1 / 3;
     border: 1px solid #52734d;
     border-radius: 8px;
+    width: 80%;
+    justify-self: center;
+    font-style: italic;
+}
+
+.book-modal-footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.book-modal-footer button {
+    height: 2rem;
+    width: 7rem;
+    background-color: #52734d;
+    color: #feffde;
+    font-size: 1rem;
+    font-family: 'Libre Baskerville';
+    font-weight: 600;
+    border-radius: 8px;
+    border-color: #feffde;
+    border: none;
+    box-shadow: 0px 1px 4px 0px #52734d;
+}
+
+.book-modal-body input {
+    background-color: #feffde;
+    border-radius: 6px;
+    border: 1px solid #52734d;
+    color: #52734d;
+    font-family: 'Libre Baskerville';
+    font-size: 1rem;
+}
+
+.book-modal-body input:focus {
+    outline: none;
+    box-shadow: 0px 0px 4px 1px #52734d;
+}
+
+input[type='radio'] {
+    accent-color: #52734d;
+}
+
+/* Remove number spinner from input */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Remove number spinner from input */
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
 }
