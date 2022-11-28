@@ -1,11 +1,24 @@
+const mainSection = document.querySelector('section');
 const bookModal = document.querySelector('.book-modal');
 const addBtn = document.getElementById('add-button');
 const closeModal = document.getElementById('close-modal');
 const submitBtn = document.getElementById('submit');
 const cancelBtn = document.getElementById('cancel');
 
+// let card = `
+//     <div class='card'>
+//     <div class='card-header'>
+//         <h2>Book Title</h2>
+//         <input type='image' src='images/close-circle.svg' alt='Close icon'>
+//     </div>
+//     <div class='card-body'>
+//         <h3>Author:</h3>
+//         <h3>Pages:</h3>
+//         <h3>Read?:</h3>
+//     </div>
+//     </div>`;
 
-let myLibrary = [];
+const myLibrary = [];
 
 
 // Book Object constructor
@@ -31,11 +44,24 @@ function addBook(addTitle, addAuthor, addPages, addRead){
 function displayList() {
     myLibrary.forEach(book => {
         for (let key in book) {
-            console.log(`${key}: ${book[key]}`);
+            // console.log(`${key}: ${book[key]}`);
+            const card = `
+            <div class='card'>
+            <div class='card-header'>
+                <h2>${book.title}</h2>
+                <input type='image' src='images/close-circle.svg' alt='Close icon'>
+            </div>
+            <div class='card-body'>
+                <h3>Author:</h3>
+                <h3>Pages:</h3>
+                <h3>Read?:</h3>
+            </div>
+            </div>`;
+            mainSection.innerHTML += card;
         }
+        
     });
 }
-
 
 
 addBtn.addEventListener('click', ()=> {
@@ -56,3 +82,4 @@ console.log(addBook('2The Book', 'Lamar', 500, true));
 console.log(addBook('3The Book', 'Lamar', 500, true));
 console.log(addBook('4The Book', 'Lamar', 500, true));
 console.log(displayList());
+
