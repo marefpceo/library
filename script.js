@@ -5,19 +5,7 @@ const closeModal = document.getElementById('close-modal');
 const submitBtn = document.getElementById('submit');
 const cancelBtn = document.getElementById('cancel');
 
-// let card = `
-//     <div class='card'>
-//     <div class='card-header'>
-//         <h2>Book Title</h2>
-//         <input type='image' src='images/close-circle.svg' alt='Close icon'>
-//     </div>
-//     <div class='card-body'>
-//         <h3>Author:</h3>
-//         <h3>Pages:</h3>
-//         <h3>Read?:</h3>
-//     </div>
-//     </div>`;
-
+let card = ``;
 const myLibrary = [];
 
 
@@ -27,6 +15,7 @@ function Book(title, author, numOfPages, haveRead) {
     this.author = author;
     this.numOfPages = numOfPages;
     this.haveRead = haveRead;
+    this.recordNum = myLibrary.length + 1;
     // this.bookInfo = function () {
     //     return `${title} by ${author}, ${numOfPages} pages, ${haveRead}`;
     // } 
@@ -40,27 +29,26 @@ function addBook(addTitle, addAuthor, addPages, addRead){
 }
    
 
-// Displays each book
-function displayList() {
+// Loops through myLibrary[] and creates a new 'div' for each book entry.
+function displayList() {    
     myLibrary.forEach(book => {
+        const div = document.createElement('div');
+        div.className = 'card';
         for (let key in book) {
-            // console.log(`${key}: ${book[key]}`);
-            const card = `
-            <div class='card'>
+            card = `
             <div class='card-header'>
                 <h2>${book.title}</h2>
                 <input type='image' src='images/close-circle.svg' alt='Close icon'>
             </div>
             <div class='card-body'>
-                <h3>Author:</h3>
-                <h3>Pages:</h3>
-                <h3>Read?:</h3>
-            </div>
+                <h3>Author:${book.author}</h3>
+                <h3>Pages:${book.numOfPages}</h3>
+                <h3>Read?:${book.haveRead}</h3>
             </div>`;
-            mainSection.innerHTML += card;
         }
-        
-    });
+        div.innerHTML = card;
+        mainSection.appendChild(div);
+    });  
 }
 
 
