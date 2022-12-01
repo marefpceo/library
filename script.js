@@ -4,11 +4,17 @@ const addBtn = document.getElementById('add-button');
 const closeModal = document.getElementById('close-modal');
 const submitBtn = document.getElementById('submit-btn');
 const cancelBtn = document.getElementById('cancel');
-const cardDelete = document.querySelector('card-delete');
 
 let card = ``;
-let myLibrary = [];
+let myLibrary = [{
+    title: 'The Hobbit',
+    author: 'J.R.R. Tolkien',
+    numOfPages: 295,
+    haveRead: true,
+    recordNum: 'card-1',
+}];
 
+window.onload = displayList();
 
 // Book Object constructor
 function Book(title, author, numOfPages, haveRead) {
@@ -16,36 +22,47 @@ function Book(title, author, numOfPages, haveRead) {
     this.author = author;
     this.numOfPages = numOfPages;
     this.haveRead = haveRead;
-    this.recordNum = myLibrary.length + 1;
+    this.recordNum = 'card-' + (myLibrary.length + 1);
 }
 
 // Adds new books from user input
 function addBook(addTitle, addAuthor, addPages, addRead){
     const bookInput = new Book(addTitle, addAuthor, addPages, addRead);
+    console.log(bookInput);
     myLibrary.push(bookInput);
-    return myLibrary;
+    displayList();
 }
+
+// Add event listener to section element 
+mainSection.addEventListener('click', function(event) {
+    if(!event.target.matches('.book-card')) return;
+    const cardId = event.target.id;
+    const child = document.getElementById(cardId);
+    const parent = child.closest('div.card');
+    deleteCard(cardId);
+    parent.remove();
+    console.log(cardId);
+});
    
-
-
+// Deletes the selected book object from the arrary
 function deleteCard(record) {
     let recordId = record;
-    const num = recordId.splice(0, 5);
-    myLibrary.splice(num, 1);
+    let num = recordId.slice(5);
+    myLibrary.splice((num-1), 1);
+    console.log(myLibrary);
     return myLibrary;
 }
 
 // Loops through myLibrary[] and creates a new 'div' for each book entry.
 function displayList() {    
     const div = document.createElement('div');
-    myLibrary.forEach(book => {
-        
+    myLibrary.forEach(book => {     
         div.className = 'card';
         for (let key in book) {
             card = `
             <div class='card-header'>
                 <h2>${book.title}</h2>
-                <input type='image' src='images/close-circle.svg' name='card-delete' id='card-${book.recordNum}' alt='Close icon'>
+                <input type='image' src='images/close-circle.svg' class='book-card' id='${book.recordNum}' alt='Close icon'>
             </div>
             <div class='card-body'>
                 <h3>Author:${book.author}</h3>
@@ -54,9 +71,8 @@ function displayList() {
             </div>`;
         }
         div.innerHTML = card;
-        
     });  
-    mainSection.appendChild(div);
+    mainSection.insertBefore(div, bookModal);
     console.log(myLibrary);
 }
 
@@ -65,7 +81,6 @@ function clearFields() {
     document.getElementById('author').value = '';
     document.getElementById('pages').value = '';
 }
-
 
 addBtn.addEventListener('click', ()=> {
     bookModal.style.display = 'grid';
@@ -88,16 +103,6 @@ submitBtn.addEventListener('click', ()=> {
     let haveRead = document.getElementsByName('read').value;
 
     addBook(addTitle, addAuthor, numOfPages, haveRead);
-    displayList();
     bookModal.style.display = 'none';
     clearFields();
 });
-
-
-
-// console.log(addBook('The Book', 'Lamar', 500, true));
-// console.log(addBook('2The Book', 'Lamar', 500, true));
-// console.log(addBook('3The Book', 'Lamar', 500, true));
-// console.log(addBook('4The Book', 'Lamar', 500, true));
-console.log(displayList());
-
