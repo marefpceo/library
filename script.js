@@ -10,7 +10,7 @@ let myLibrary = [{
     title: 'The Hobbit',
     author: 'J.R.R. Tolkien',
     numOfPages: 295,
-    haveRead: true,
+    haveRead: 'Yes',
     recordNum: 'card-1',
 }];
 
@@ -65,9 +65,9 @@ function displayList() {
                 <input type='image' src='images/close-circle.svg' class='book-card' id='${book.recordNum}' alt='Close icon'>
             </div>
             <div class='card-body'>
-                <h3>Author:${book.author}</h3>
-                <h3>Pages:${book.numOfPages}</h3>
-                <h3>Read?:${book.haveRead}</h3>
+                <h3><pre>Author:    ${book.author}</pre></h3>
+                <h3><pre>Pages:     ${book.numOfPages}</pre></h3>
+                <h3><pre>Read?:     ${book.haveRead}</pre></h3>
             </div>`;
         }
         div.innerHTML = card;
@@ -100,7 +100,7 @@ submitBtn.addEventListener('click', ()=> {
     let addTitle = document.getElementById('title').value;
     let addAuthor = document.getElementById('author').value;
     let numOfPages = document.getElementById('pages').value;
-    let haveRead = document.getElementsByName('read').value;
+    let haveRead = document.getElementById('haveRead').checked ? 'Yes' : 'No';
 
     addBook(addTitle, addAuthor, numOfPages, haveRead);
     bookModal.style.display = 'none';
