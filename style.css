@@ -50,7 +50,8 @@ p {
 }
 
 input[type='image']:active,
-.book-modal-footer button:active {
+.book-modal-footer button:active,
+.read-toggle-btn:active {
     transform: scale(0.95);
 }
 
@@ -59,6 +60,20 @@ input[type='image']:hover,
     transform: scale(1.1);
 }
 
+.book-modal-footer button,
+.read-toggle-btn {
+    height: 2rem;
+    width: 7rem;
+    background-color: #52734d;
+    color: #feffde;
+    font-size: 1rem;
+    font-family: 'Libre Baskerville';
+    font-weight: 600;
+    border-radius: 8px;
+    border-color: #feffde;
+    border: none;
+    box-shadow: 0px 1px 4px 0px #52734d;
+}
 
 
 /******************** Header Section ********************/
@@ -95,6 +110,9 @@ section::-webkit-scrollbar {
 }
 
 .card {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
     background-color: #feffde;
     color: #52734d;
     border: 2px solid #91c788;
@@ -113,6 +131,10 @@ section::-webkit-scrollbar {
 
 .card-header input[type='image'] {
     width: 2rem;
+}
+
+.read-toggle-btn {
+    font-size: .9rem;
 }
 
 
@@ -181,20 +203,6 @@ fieldset {
     display: flex;
     justify-content: space-around;
     align-items: center;
-}
-
-.book-modal-footer button {
-    height: 2rem;
-    width: 7rem;
-    background-color: #52734d;
-    color: #feffde;
-    font-size: 1rem;
-    font-family: 'Libre Baskerville';
-    font-weight: 600;
-    border-radius: 8px;
-    border-color: #feffde;
-    border: none;
-    box-shadow: 0px 1px 4px 0px #52734d;
 }
 
 .book-modal-body input {

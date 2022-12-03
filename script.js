@@ -4,6 +4,7 @@ const addBtn = document.getElementById('add-button');
 const closeModal = document.getElementById('close-modal');
 const submitBtn = document.getElementById('submit-btn');
 const cancelBtn = document.getElementById('cancel');
+// const readToggleBtn = document.getElementsByClassName('.read-toggle-btn');
 
 let card = ``;
 let myLibrary = [{
@@ -22,26 +23,45 @@ function Book(title, author, numOfPages, haveRead) {
     this.author = author;
     this.numOfPages = numOfPages;
     this.haveRead = haveRead;
-    this.recordNum = 'card-' + (myLibrary.length + 1);
+    this.recordNum = myLibrary.length + 1;
+}
+
+Book.prototype.toggleReadStatus = function() {
+    if(this.haveRead === 'Yes') {
+        return this.haveRead = 'No';
+    }else {
+        return this.haveRead = 'Yes';
+    }
 }
 
 // Adds new books from user input
 function addBook(addTitle, addAuthor, addPages, addRead){
-    const bookInput = new Book(addTitle, addAuthor, addPages, addRead);
-    console.log(bookInput);
+    const bookInput = Object.create(Book.prototype);
+    bookInput.title = addTitle;
+    bookInput.author = addAuthor;
+    bookInput.numOfPages = addPages;
+    bookInput.haveRead = addRead;
     myLibrary.push(bookInput);
     displayList();
 }
 
+
 // Add event listener to section element 
 mainSection.addEventListener('click', function(event) {
-    if(!event.target.matches('.book-card')) return;
+    
+
+    if(!event.target.matches('.book-card') && !event.target.matches('.read-toggle-btn')) return;
     const cardId = event.target.id;
     const child = document.getElementById(cardId);
-    const parent = child.closest('div.card');
-    deleteCard(cardId);
-    parent.remove();
-    console.log(cardId);
+
+    if(event.target.matches('.read-toggle-btn')) {
+        
+        console.log;
+    } else{
+        const parent = child.closest('div.card');    
+        deleteCard(cardId);
+        parent.remove();
+    }
 });
    
 // Deletes the selected book object from the arrary
@@ -49,7 +69,6 @@ function deleteCard(record) {
     let recordId = record;
     let num = recordId.slice(5);
     myLibrary.splice((num-1), 1);
-    console.log(myLibrary);
     return myLibrary;
 }
 
@@ -62,19 +81,21 @@ function displayList() {
             card = `
             <div class='card-header'>
                 <h2>${book.title}</h2>
-                <input type='image' src='images/close-circle.svg' class='book-card' id='${book.recordNum}' alt='Close icon'>
+                <input type='image' src='images/close-circle.svg' class='book-card' id='card-${book.recordNum}' alt='Close icon'>
             </div>
             <div class='card-body'>
                 <h3><pre>Author:    ${book.author}</pre></h3>
                 <h3><pre>Pages:     ${book.numOfPages}</pre></h3>
                 <h3><pre>Read?:     ${book.haveRead}</pre></h3>
-            </div>`;
+            </div>
+            <input type='hidden' id='indexNumber' name='indexNumber' value=${book.recordNum}>
+            <button class='read-toggle-btn'>Read Status</button>`;
         }
         div.innerHTML = card;
     });  
     mainSection.insertBefore(div, bookModal);
-    console.log(myLibrary);
 }
+
 
 function clearFields() {
     document.getElementById('title').value = '';
@@ -106,3 +127,7 @@ submitBtn.addEventListener('click', ()=> {
     bookModal.style.display = 'none';
     clearFields();
 });
+
+// readToggleBtn.addEventListener('click', ()=> {
+    
+// });
