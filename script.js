@@ -4,7 +4,10 @@ const addBtn = document.getElementById('add-button');
 const closeModal = document.getElementById('close-modal');
 const submitBtn = document.getElementById('submit-btn');
 const cancelBtn = document.getElementById('cancel');
-// const readToggleBtn = document.getElementsByClassName('.read-toggle-btn');
+const readToggleBtn = document.getElementsByClassName('.read-toggle-btn');
+const cardIndex = document.getElementById('indexNumber');
+
+let cardId;
 
 let card = ``;
 let myLibrary = [{
@@ -12,7 +15,7 @@ let myLibrary = [{
     author: 'J.R.R. Tolkien',
     numOfPages: 295,
     haveRead: 'Yes',
-    recordNum: 'card-1',
+    recordNum: 1,
 }];
 
 window.onload = displayList();
@@ -23,8 +26,12 @@ function Book(title, author, numOfPages, haveRead) {
     this.author = author;
     this.numOfPages = numOfPages;
     this.haveRead = haveRead;
-    this.recordNum = myLibrary.length + 1;
+    // this.recordNum = function() {myLibrary.length + 1} ;
 }
+
+Book.prototype.recordNum = function() {
+    return myLibrary.length + 1;
+};
 
 Book.prototype.toggleReadStatus = function() {
     if(this.haveRead === 'Yes') {
@@ -41,22 +48,24 @@ function addBook(addTitle, addAuthor, addPages, addRead){
     bookInput.author = addAuthor;
     bookInput.numOfPages = addPages;
     bookInput.haveRead = addRead;
+    bookInput.recordNum = bookInput.recordNum();
     myLibrary.push(bookInput);
     displayList();
 }
 
+const cardFooter = document.querySelector('.card-footer');
+
 
 // Add event listener to section element 
 mainSection.addEventListener('click', function(event) {
-    
-
-    if(!event.target.matches('.book-card') && !event.target.matches('.read-toggle-btn')) return;
-    const cardId = event.target.id;
+    cardId = event.target.id;
     const child = document.getElementById(cardId);
 
+    if(!event.target.matches('.book-card') && !event.target.matches('.read-toggle-btn')) return;
     if(event.target.matches('.read-toggle-btn')) {
-        
-        console.log;
+        const test = event.target.closest('div.card');
+        const cardHead = test.querySelector('.card-header');
+        console.log(cardHead);
     } else{
         const parent = child.closest('div.card');    
         deleteCard(cardId);
@@ -88,8 +97,10 @@ function displayList() {
                 <h3><pre>Pages:     ${book.numOfPages}</pre></h3>
                 <h3><pre>Read?:     ${book.haveRead}</pre></h3>
             </div>
-            <input type='hidden' id='indexNumber' name='indexNumber' value=${book.recordNum}>
-            <button class='read-toggle-btn'>Read Status</button>`;
+            <div class='card-footer'>
+                <input type='hidden' id='indexNumber' name='indexNumber' value=${book.recordNum}>
+                <button class='read-toggle-btn'>Read Status</button>
+            </div>`;
         }
         div.innerHTML = card;
     });  
