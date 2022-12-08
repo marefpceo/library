@@ -7,17 +7,19 @@ const cancelBtn = document.getElementById('cancel');
 const readToggleBtn = document.getElementsByClassName('.read-toggle-btn');
 const cardIndex = document.getElementById('indexNumber');
 
-let cardId;
-
+let recordStart = 0;
 let card = ``;
-let myLibrary = [{
-    title: 'The Hobbit',
-    author: 'J.R.R. Tolkien',
-    numOfPages: 295,
-    haveRead: 'Yes',
-    recordNum: 1,
-}];
+// let myLibrary = [{
+//     title: 'The Hobbit',
+//     author: 'J.R.R. Tolkien',
+//     numOfPages: 295,
+//     haveRead: 'Yes',
+//     recordNum: 'card-1',
+// }];
 
+let myLibrary = [];
+
+// Displays the preloaded record
 window.onload = displayList();
 
 // Book Object constructor
@@ -26,15 +28,15 @@ function Book(title, author, numOfPages, haveRead) {
     this.author = author;
     this.numOfPages = numOfPages;
     this.haveRead = haveRead;
-    // this.recordNum = function() {myLibrary.length + 1} ;
 }
 
+// Creates a record number for each book created
 Book.prototype.recordNum = function() {
-    return myLibrary.length + 1;
+    return recordStart++;
 };
 
-Book.prototype.toggleReadStatus = function() {
-    if(this.haveRead === 'Yes') {
+Book.prototype.toggleReadStatus = function(readStatus) {
+    if(readStatus === 'Yes') {
         return this.haveRead = 'No';
     }else {
         return this.haveRead = 'Yes';
@@ -53,33 +55,36 @@ function addBook(addTitle, addAuthor, addPages, addRead){
     displayList();
 }
 
-const cardFooter = document.querySelector('.card-footer');
-
-
-// Add event listener to section element 
-mainSection.addEventListener('click', function(event) {
-    cardId = event.target.id;
-    const child = document.getElementById(cardId);
+// Add event listener to section element with bubbling. Uses condition statement to filter
+// elements so that click event hander only responds when the toggle button and delete button 
+// are clicked
+mainSection.addEventListener('click', function(event) {  
+    let recordId = '';
+    let num = '';
 
     if(!event.target.matches('.book-card') && !event.target.matches('.read-toggle-btn')) return;
     if(event.target.matches('.read-toggle-btn')) {
-        const test = event.target.closest('div.card');
-        const cardHead = test.querySelector('.card-header');
-        console.log(cardHead);
+        const bookCard = event.target.closest('div.card');
+        const cardHead = bookCard.querySelector('.card-header');
+        const headInput = cardHead.querySelector('.book-card').id;
+        recordId = headInput.slice(5);
+        let currentRecord = myLibrary[recordId];
+        let readStatus = currentRecord.haveRead;
+        currentRecord.toggleReadStatus(readStatus);
+        console.log(myLibrary[recordId]);
+        console.log(headInput);
+        console.log(readStatus);
     } else{
-        const parent = child.closest('div.card');    
-        deleteCard(cardId);
+        const cardId = event.target.id;
+        const child = document.getElementById(cardId);
+        const parent = child.closest('div.card');  
+        recordId = cardId.slice(5);
+        num = myLibrary.map(object => object.recordNum === recordId);
+        myLibrary.splice(num, 1);
         parent.remove();
     }
 });
    
-// Deletes the selected book object from the arrary
-function deleteCard(record) {
-    let recordId = record;
-    let num = recordId.slice(5);
-    myLibrary.splice((num-1), 1);
-    return myLibrary;
-}
 
 // Loops through myLibrary[] and creates a new 'div' for each book entry.
 function displayList() {    
@@ -98,7 +103,6 @@ function displayList() {
                 <h3><pre>Read?:     ${book.haveRead}</pre></h3>
             </div>
             <div class='card-footer'>
-                <input type='hidden' id='indexNumber' name='indexNumber' value=${book.recordNum}>
                 <button class='read-toggle-btn'>Read Status</button>
             </div>`;
         }
@@ -138,7 +142,3 @@ submitBtn.addEventListener('click', ()=> {
     bookModal.style.display = 'none';
     clearFields();
 });
-
-// readToggleBtn.addEventListener('click', ()=> {
-    
-// });
