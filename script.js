@@ -4,19 +4,9 @@ const addBtn = document.getElementById('add-button');
 const closeModal = document.getElementById('close-modal');
 const submitBtn = document.getElementById('submit-btn');
 const cancelBtn = document.getElementById('cancel');
-const readToggleBtn = document.getElementsByClassName('.read-toggle-btn');
-const cardIndex = document.getElementById('indexNumber');
 
 let recordStart = 0;
 let card = ``;
-// let myLibrary = [{
-//     title: 'The Hobbit',
-//     author: 'J.R.R. Tolkien',
-//     numOfPages: 295,
-//     haveRead: 'Yes',
-//     recordNum: 'card-1',
-// }];
-
 let myLibrary = [];
 
 // Displays the preloaded record
@@ -35,12 +25,9 @@ Book.prototype.recordNum = function() {
     return recordStart++;
 };
 
+// Check readStatus and changes the value 
 Book.prototype.toggleReadStatus = function(readStatus) {
-    if(readStatus === 'Yes') {
-        return this.haveRead = 'No';
-    }else {
-        return this.haveRead = 'Yes';
-    }
+    return (readStatus === 'Yes' ? this['haveRead'] = 'No' : this['haveRead'] = 'Yes');
 }
 
 // Adds new books from user input
@@ -67,13 +54,17 @@ mainSection.addEventListener('click', function(event) {
         const bookCard = event.target.closest('div.card');
         const cardHead = bookCard.querySelector('.card-header');
         const headInput = cardHead.querySelector('.book-card').id;
+        const cardBody = bookCard.querySelector('.card-body');
+        
         recordId = headInput.slice(5);
+
+        // Adjust nth-child if more categories are added or if element is moved 
+        let readDisplay = cardBody.querySelector('h3:nth-child(3) > pre');
         let currentRecord = myLibrary[recordId];
         let readStatus = currentRecord.haveRead;
+        
         currentRecord.toggleReadStatus(readStatus);
-        console.log(myLibrary[recordId]);
-        console.log(headInput);
-        console.log(readStatus);
+        readDisplay.innerHTML = `<pre>Read?:     ${currentRecord.haveRead}</pre>`;
     } else{
         const cardId = event.target.id;
         const child = document.getElementById(cardId);
@@ -85,7 +76,6 @@ mainSection.addEventListener('click', function(event) {
     }
 });
    
-
 // Loops through myLibrary[] and creates a new 'div' for each book entry.
 function displayList() {    
     const div = document.createElement('div');
@@ -111,27 +101,31 @@ function displayList() {
     mainSection.insertBefore(div, bookModal);
 }
 
-
 function clearFields() {
     document.getElementById('title').value = '';
     document.getElementById('author').value = '';
     document.getElementById('pages').value = '';
+    document.getElementById('haveNotRead').checked = true;
 }
 
+// Displays the add book modal
 addBtn.addEventListener('click', ()=> {
     bookModal.style.display = 'grid';
 });
 
+// Closes the add book modal
 closeModal.addEventListener('click', ()=> {
     bookModal.style.display = 'none';
     clearFields();
 });
 
+// Cancels the current entry, clears all fields and closes the add book modal
 cancelBtn.addEventListener('click', ()=> {
     bookModal.style.display = 'none';
     clearFields();
 });
 
+// Submits data input by the user to add a new book
 submitBtn.addEventListener('click', ()=> {
     let addTitle = document.getElementById('title').value;
     let addAuthor = document.getElementById('author').value;
