@@ -95,7 +95,8 @@ section {
   display: flex;
   flex-wrap: wrap;
   overflow-y: scroll;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 5%;
   background-color: #ddffbc;
   padding: 40px;
   scrollbar-width: none;

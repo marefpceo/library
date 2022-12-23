@@ -35,34 +35,39 @@ function displayList() {
 // Displays the preloaded record
 window.onload = displayList();
 
-// Book Object constructor
-function Book(title, author, numOfPages, haveRead) {
-  this.title = title;
-  this.author = author;
-  this.numOfPages = numOfPages;
-  this.haveRead = haveRead;
+// Book Class
+class Book {
+  constructor (title, author, numOfPages, haveRead) {
+    this.title = title;
+    this.author = author;
+    this.numOfPages = numOfPages;
+    this.haveRead = haveRead;
+  }
+
+  get readStatus() {
+    return this.haveRead;
+  }
+  
+  static recordNum() {
+    recordStart += 1;
+    return recordStart;
+  }
+
+  toggleReadStatus(readStatus) {
+    this.haveRead = readStatus === 'Yes' ? ('No') : ('Yes');
+    return this.haveRead;
+  }
 }
-
-// Creates a record number for each book created
-Book.prototype.recordNum = function () {
-  recordStart += 1;
-  return recordStart;
-};
-
-// Check readStatus and changes the value
-Book.prototype.toggleReadStatus = function (readStatus) {
-  this.haveRead = readStatus === "Yes" ? ("No") : ("Yes");
-  return this.haveRead;
-};
 
 // Adds new books from user input
 function addBook(addTitle, addAuthor, addPages, addRead) {
-  const bookInput = Object.create(Book.prototype);
+  // const bookInput = Object.create(Book.prototype);
+  const bookInput = new Book();
   bookInput.title = addTitle;
   bookInput.author = addAuthor;
   bookInput.numOfPages = addPages;
   bookInput.haveRead = addRead;
-  bookInput.recordNum = bookInput.recordNum();
+  bookInput.recordNum = Book.recordNum();
   myLibrary.push(bookInput);
   displayList();
 }
@@ -84,12 +89,12 @@ mainSection.addEventListener("click", (event) => {
     const cardHead = bookCard.querySelector(".card-header");
     const headInput = cardHead.querySelector(".book-card").id;
     const cardBody = bookCard.querySelector(".card-body");
-
+    
     recordId = headInput.slice(5);
-
+    const index = myLibrary.map(e => e.recordNum).indexOf(Number(recordId));
     // Adjust nth-child if more categories are added or if element is moved
     const readDisplay = cardBody.querySelector("h3:nth-child(3) > pre");
-    const currentRecord = myLibrary[recordId];
+    const currentRecord = myLibrary[index];
     const readStatus = currentRecord.haveRead;
 
     currentRecord.toggleReadStatus(readStatus);
@@ -99,7 +104,7 @@ mainSection.addEventListener("click", (event) => {
     const child = document.getElementById(cardId);
     const parent = child.closest("div.card");
     recordId = cardId.slice(5);
-    num = myLibrary.map((object) => object.recordNum === recordId);
+    num = myLibrary.map(e => e.recordNum).indexOf(Number(recordId));
     myLibrary.splice(num, 1);
     parent.remove();
   }
@@ -139,4 +144,5 @@ submitBtn.addEventListener("click", () => {
   addBook(addTitle, addAuthor, numOfPages, haveRead);
   bookModal.style.display = "none";
   clearFields();
+  console.log(myLibrary);
 });
