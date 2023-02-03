@@ -4,6 +4,10 @@ const addBtn = document.getElementById("add-button");
 const closeModal = document.getElementById("close-modal");
 const submitBtn = document.getElementById("submit-btn");
 const cancelBtn = document.getElementById("cancel");
+const addTitle = document.getElementById("title");
+const addAuthor = document.getElementById("author");
+const numOfPages = document.getElementById("pages");
+const haveRead = document.getElementById("haveRead").checked ? "Yes" : "No";
 const myLibrary = [];
 
 let recordStart = -1;
@@ -134,15 +138,35 @@ cancelBtn.addEventListener("click", () => {
   clearFields();
 });
 
+addTitle.addEventListener('input', ()=> {
+  if (addTitle.reportValidity() === false) {
+    addTitle.setCustomValidity('Title is a required field');
+  }
+});
+
+addAuthor.addEventListener('input', () => {
+  if (addAuthor.reportValidity() === false) {
+    addAuthor.setCustomValidity('Author is a required field');
+  }
+});
+
+numOfPages.addEventListener('input', () => {
+  if (numOfPages.reportValidity() === false) {
+    numOfPages.setCustomValidity('Number of pages is a required field');
+  }
+});
+
 // Submits data input by the user to add a new book
 submitBtn.addEventListener("click", () => {
-  const addTitle = document.getElementById("title").value;
-  const addAuthor = document.getElementById("author").value;
-  const numOfPages = document.getElementById("pages").value;
-  const haveRead = document.getElementById("haveRead").checked ? "Yes" : "No";
-
-  addBook(addTitle, addAuthor, numOfPages, haveRead);
-  bookModal.style.display = "none";
-  clearFields();
-  console.log(myLibrary);
+  if (!addTitle.validity.valid) {
+    addTitle.reportValidity();
+  } else if (!addAuthor.validity.valid) {
+    addAuthor.reportValidity();
+  } else if (!numOfPages.validity.valid) {
+    numOfPages.reportValidity();
+  } else {
+    addBook(addTitle.value, addAuthor.value, numOfPages.value, haveRead);
+    bookModal.style.display = "none";
+    clearFields();
+  }
 });
